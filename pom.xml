@@ -8,12 +8,12 @@
         <version>7</version>
     </parent>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <groupId>org.webjars</groupId>
-    <artifactId>dustjs-linkedin</artifactId>
-    <version>2.3.5-SNAPSHOT</version>
-    <name>dustjs-linkedin</name>
-    <description>WebJar for dustjs-linkedin</description>
+    <artifactId>dustjs-linkedin-parent</artifactId>
+    <version>2.4.0-SNAPSHOT</version>
+    <name>dustjs-linkedin-parent</name>
+    <description>Parent WebJar for dustjs-linkedin</description>
     <url>http://webjars.org</url>
 
     <developers>
@@ -22,12 +22,17 @@
             <name>Sergey Skrobotov</name>
             <email>s.skrobotov@gmail.com</email>
         </developer>
+        <developer>
+            <id>jmparsons</id>
+            <name>Jonathan Parsons</name>
+            <email>jonparsons@gmail.com</email>
+        </developer>
     </developers>
 
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt</url>
+            <url>https://github.com/linkedin/dustjs/blob/master/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -49,11 +54,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <upstream.version>2.3.4</upstream.version>
-        <download.url>https://github.com/linkedin/dustjs/archive/</download.url>
-        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}
-        </destDir>
+        <upstreamVersion>2.4.0</upstreamVersion>
+        <sourceUrl>https://github.com/linkedin/dustjs/archive</sourceUrl>
+        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstreamVersion}</destDir>
+        <extractDir>${project.build.directory}/dustjs-${upstreamVersion}</extractDir>
     </properties>
+
+    <modules>
+        <module>dustjs-linkedin</module>
+        <module>dustjs-linkedin-node</module>
+    </modules>
 
     <build>
         <plugins>
@@ -63,14 +73,15 @@
                 <version>1.0-beta-4</version>
                 <executions>
                     <execution>
+                        <id>download-archive</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>download-single</goal>
                         </goals>
                         <configuration>
-                            <url>${download.url}</url>
-                            <fromFile>v${upstream.version}.zip</fromFile>
-                            <toFile>${project.build.directory}/${project.artifactId}.zip</toFile>
+                            <url>${sourceUrl}</url>
+                            <fromFile>v${upstreamVersion}.zip</fromFile>
+                            <toFile>${project.build.directory}/dustjs.zip</toFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -81,6 +92,7 @@
                 <version>1.7</version>
                 <executions>
                     <execution>
+                        <id>extract</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
@@ -88,13 +100,7 @@
                         <configuration>
                             <target>
                                 <echo message="unzip archive" />
-                                <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
-                                <echo message="moving resources" />
-                                <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/dustjs-${upstream.version}/dist/">
-                                        <filename name="**/*.js" />
-                                    </fileset>
-                                </move>
+                                <unzip src="${project.build.directory}/dustjs.zip" dest="${project.build.directory}" />
                             </target>
                         </configuration>
                     </execution>
