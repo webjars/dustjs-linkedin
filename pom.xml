@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>dustjs-linkedin</artifactId>
-    <version>2.4.0-1</version>
+    <version>2.4.0-2-SNAPSHOT</version>
     <name>dustjs-linkedin</name>
     <description>WebJar for dustjs-linkedin</description>
     <url>http://webjars.org</url>
@@ -36,7 +36,7 @@
         <url>http://github.com/webjars/dustjs-linkedin</url>
         <connection>scm:git:https://github.com/webjars/dustjs-linkedin.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/dustjs-linkedin.git</developerConnection>
-        <tag>dustjs-linkedin-2.4.0-1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
