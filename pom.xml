@@ -95,6 +95,9 @@
                                         <filename name="**/*.js" />
                                     </fileset>
                                 </move>
+                                <move todir="${destDir}/lib">
+                                    <fileset dir="${project.build.directory}/dustjs-${upstream.version}/lib" />
+                                </move>
                                 <move file="${project.build.directory}/dustjs-${upstream.version}/package.json" todir="${destDir}" />
                             </target>
                         </configuration>
