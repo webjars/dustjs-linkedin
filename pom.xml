@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>dustjs-linkedin</artifactId>
-    <version>2.4.1-SNAPSHOT</version>
+    <version>2.4.0-SNAPSHOT</version>
     <name>dustjs-linkedin</name>
     <description>WebJar for dustjs-linkedin</description>
     <url>http://webjars.org</url>
@@ -49,10 +49,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <upstream.version>2.4.0</upstream.version>
-        <download.url>https://github.com/linkedin/dustjs/archive/</download.url>
-        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}
-        </destDir>
+        <upstreamVersion>2.4.0</upstreamVersion>
+        <sourceUrl>https://github.com/linkedin/dustjs/archive</sourceUrl>
+        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstreamVersion}</destDir>
+        <extractDir>${project.build.directory}/dustjs-${upstreamVersion}</extractDir>
     </properties>
 
     <build>
@@ -68,8 +68,8 @@
                             <goal>download-single</goal>
                         </goals>
                         <configuration>
-                            <url>${download.url}</url>
-                            <fromFile>v${upstream.version}.zip</fromFile>
+                            <url>${sourceUrl}</url>
+                            <fromFile>v${upstreamVersion}.zip</fromFile>
                             <toFile>${project.build.directory}/${project.artifactId}.zip</toFile>
                         </configuration>
                     </execution>
@@ -91,11 +91,14 @@
                                 <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/dustjs-${upstream.version}/dist/">
+                                    <fileset dir="${extractDir}/dist/">
                                         <filename name="**/*.js" />
                                     </fileset>
                                 </move>
-                                <move file="${project.build.directory}/dustjs-${upstream.version}/package.json" todir="${destDir}" />
+                                <move todir="${destDir}/lib">
+                                    <fileset dir="${extractDir}/lib" />
+                                </move>
+                                <move file="${extractDir}/package.json" todir="${destDir}" />
                             </target>
                         </configuration>
                     </execution>
